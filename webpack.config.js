@@ -1,4 +1,5 @@
 const path = require("path");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
@@ -20,7 +21,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: 'Hot Module Replacement'
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new UglifyJSPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'common'  //指定公共 bundle 的名称
+        })
     ],
     output : {
         filename : '[name].bundle.js',
